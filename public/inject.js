@@ -1,5 +1,12 @@
 /* eslint-disable no-undef */
-window.REACT_EXTENSION_ACTIVE = window.REACT_EXTENSION_ACTIVE || false;
+
+if (window.REACT_EXTENSION_ACTIVE === undefined) {
+  window.REACT_EXTENSION_ACTIVE = false;
+}
+
+if (window.REACT_EXTENSION_ID === undefined) {
+  window.REACT_EXTENSION_ID = `chrome-extension-container-${Date.now()}`;
+}
 
 function handleLoad() {
   let data = this.responseText;
@@ -19,17 +26,20 @@ function handleLoad() {
     return "";
   });
 
-  // Append HTML content
-  const body = document.querySelector("body");
-  body.insertAdjacentHTML("beforeend", data);
+  // Create container
+  const container = document.createElement("div");
+  container.setAttribute("id", window.REACT_EXTENSION_ID);
+  container.insertAdjacentHTML("beforeend", data);
 
   // Insert scripts manually
   for (let src of scripts) {
     const script = document.createElement("script");
     script.setAttribute("src", src);
-    body.append(script);
+    container.append(script);
   }
 
+  // Append container to body
+  document.querySelector("body").append(container);
   window.REACT_EXTENSION_ACTIVE = true;
 }
 
@@ -40,8 +50,7 @@ function handleLoad() {
     req.open("GET", chrome.runtime.getURL("index.html"));
     req.send();
   } else {
-    // TODO: Pack everything into one container (easier to delete)
-    document.getElementById("chrome-extension-1604438296").remove();
+    document.getElementById(window.REACT_EXTENSION_ID).remove();
     window.REACT_EXTENSION_ACTIVE = false;
   }
 })();
