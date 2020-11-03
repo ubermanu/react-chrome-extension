@@ -1,4 +1,6 @@
 /* eslint-disable no-undef */
+window.REACT_EXTENSION_ACTIVE = window.REACT_EXTENSION_ACTIVE || false;
+
 function handleLoad() {
   let data = this.responseText;
   let scripts = [];
@@ -27,9 +29,19 @@ function handleLoad() {
     script.setAttribute("src", src);
     body.append(script);
   }
+
+  window.REACT_EXTENSION_ACTIVE = true;
 }
 
-const req = new XMLHttpRequest();
-req.addEventListener("load", handleLoad);
-req.open("GET", chrome.runtime.getURL("index.html"));
-req.send();
+(function() {
+  if (!window.REACT_EXTENSION_ACTIVE) {
+    const req = new XMLHttpRequest();
+    req.addEventListener("load", handleLoad);
+    req.open("GET", chrome.runtime.getURL("index.html"));
+    req.send();
+  } else {
+    // TODO: Pack everything into one container (easier to delete)
+    document.getElementById("chrome-extension-1604438296").remove();
+    window.REACT_EXTENSION_ACTIVE = false;
+  }
+})();
