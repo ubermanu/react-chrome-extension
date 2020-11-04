@@ -4,6 +4,10 @@
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  position: fixed;
+  top: 0;
+  right: 0;
 }
 
 .App code {
