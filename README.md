@@ -8,3 +8,7 @@ This project was bootstrapped with [Compact React](https://github.com/mblydenbur
 Build the project with node then attach the build dir in Chrome Extensions.<br>
 You must enable the Developer mode (top right button in the extensions menu).
 
+## Assets
+
+* Styles are loaded within the bundle (in the page head)
+* Images are encoded in base64
