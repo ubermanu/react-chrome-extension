@@ -30,8 +30,8 @@ module.exports = {
       template: 'public/index.html',
       inject: !!process.env.WEBPACK_DEV_SERVER,
       minify: {
-        removeComments: !process.env.WEBPACK_DEV_SERVER,
-        collapseWhitespace: !process.env.WEBPACK_DEV_SERVER,
+        removeComments: true,
+        collapseWhitespace: true,
       },
     }),
   ],
